@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "middleware"
+version = "0.1.0"
+description = "Custom middleware for use with Startlette"
+authors = ["Guillermo Enrique Sánchez de Abreu <naselliug@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+starlette = "^0.25.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

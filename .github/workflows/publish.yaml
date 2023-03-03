@@ -1,0 +1,29 @@
+name: Publish to TestPyPI
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install Poetry
+      run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+
+    - name: Build and Publish Package
+      run: |
+        poetry config repositories.testpypi https://test.pypi.org/legacy/
+        poetry build
+        poetry config http-basic.testpypi __token__ ${{ secrets.TEST_PYPI_TOKEN }}
+        poetry publish --repository testpypi
+      env:
+        TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
